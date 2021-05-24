@@ -19,7 +19,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='criticality_score',
-    version='1.0.4',
+    version='1.0.7',
     author='Abhishek Arya',
     author_email='',
     description='Gives criticality score for an open source project',
@@ -34,10 +34,11 @@ setuptools.setup(
     ],
     install_requires=[
         'PyGithub>=1.53',
+        'python-gitlab>=2.5.0',
     ],
     entry_points={
         'console_scripts': ['criticality_score=criticality_score.run:main'],
     },
-    python_requires='>=3',
+    python_requires='>=3.6',
     zip_safe=False,
 )

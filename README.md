@@ -73,7 +73,9 @@ argument on the command line.
 
 ### Authentication
 
-Before running criticality score, you need to
+Before running criticality score, you need to:
+
+- For GitHub repos, you need to
 [create a GitHub access token](https://docs.github.com/en/free-pro-team@latest/developers/apps/about-apps#personal-access-tokens)
 and set it in environment variable `GITHUB_AUTH_TOKEN`.
 This helps to avoid the GitHub's
@@ -87,6 +89,20 @@ export GITHUB_AUTH_TOKEN=<your access token>
 # For windows:
 set GITHUB_AUTH_TOKEN=<your access token>
 ```
+
+- For GitLab repos, you need to
+[create a GitLab access token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html)
+and set it in environment variable `GITLAB_AUTH_TOKEN`.
+This helps to avoid the GitLab's api limitations for unauthenticated users.
+
+```shell
+# For posix platforms, e.g. linux, mac:
+export GITLAB_AUTH_TOKEN=<your access token>
+
+# For windows:
+set GITLAB_AUTH_TOKEN=<your access token>
+```
+
 ### Formatting Results
 
 There are three formats currently: `default`, `json`, and `csv`. Others may be added in the future.
@@ -111,11 +127,13 @@ source control systems.
 $ gsutil ls gs://ossf-criticality-score/*.csv
 gs://ossf-criticality-score/c_top_200.csv
 gs://ossf-criticality-score/cplusplus_top_200.csv
+gs://ossf-criticality-score/csharp_top_200.csv
 gs://ossf-criticality-score/go_top_200.csv
 gs://ossf-criticality-score/java_top_200.csv
 gs://ossf-criticality-score/js_top_200.csv
 gs://ossf-criticality-score/php_top_200.csv
 gs://ossf-criticality-score/python_top_200.csv
+gs://ossf-criticality-score/ruby_top_200.csv
 gs://ossf-criticality-score/rust_top_200.csv
 gs://ossf-criticality-score/shell_top_200.csv
 ```
@@ -125,10 +143,12 @@ This data is generated using this
 For example, to generate a list of top 200 C language projects, run:
 
 ```shell
+$ pip3 install python-gitlab PyGithub
 $ python3 -u -m criticality_score.generate \
-    --language c --count 200 --sample-size 5000
+    --language c --count 200 --sample-size 5000 --output-dir output
 ```
 
+We have also aggregated the results over 100K repositories in GitHub (language-independent) and are available for download [here](https://www.googleapis.com/download/storage/v1/b/ossf-criticality-score/o/all.csv?generation=1614554714813772&alt=media).
 
 ## Contributing
 
